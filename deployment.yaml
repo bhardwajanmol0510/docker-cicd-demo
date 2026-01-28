@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-web-deployment
+spec:
+  replicas: 3  # The goal: Run 3 copies at once
+  selector:
+    matchLabels:
+      app: my-web-app
+  template:
+    metadata:
+      labels:
+        app: my-web-app
+    spec:
+      containers:
+      - name: python-container
+        image: tangent20/my-web-app:latest  # Uses the image we built earlier
+        imagePullPolicy: Always    # IMPORTANT: Tells K8s to look on your laptop, not the internet
+        ports:
+        - containerPort: 5000
